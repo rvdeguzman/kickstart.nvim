@@ -28,6 +28,14 @@ return {
     },
   },
   opts = {
+    window = {
+      position = 'right',
+      width = 30,
+      mapping_options = {
+        noremap = true,
+        nowait = true,
+      },
+    },
     filesystem = {
       window = {
         position = 'right',
