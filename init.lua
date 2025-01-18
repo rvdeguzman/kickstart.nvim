@@ -13,28 +13,18 @@ vim.schedule(function()
 end)
 
 vim.opt.breakindent = true
-
 vim.opt.undofile = true
-
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-
 vim.opt.signcolumn = 'yes'
-
 vim.opt.updatetime = 250
-
 vim.opt.timeoutlen = 300
-
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
 vim.opt.inccommand = 'split'
-
 vim.opt.cursorline = true
-
 vim.opt.scrolloff = 4
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -285,7 +275,26 @@ require('lazy').setup({
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
         --
-
+        jdtls = {
+          java_home = '/home/rv/.sdkman/candidates/java/current/bin/java',
+          settings = {
+            java = {
+              signatureHelp = { enabled = true },
+              diagnostics = { enabled = false },
+              -- Disable document validation
+              format = { enabled = false },
+              -- Disable all validation
+              validation = {
+                enabled = false,
+                validate = false,
+              },
+            },
+          },
+          init_options = {
+            -- Disable validation at initialization
+            enableJavaValidation = false,
+          },
+        },
         lua_ls = {
           -- cmd = {...},
           -- filetypes = { ...},
