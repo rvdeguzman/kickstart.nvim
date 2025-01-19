@@ -22,12 +22,12 @@ require('lazy').setup {
   require 'plugins.telescope',
   require 'plugins.lsp',
   require 'plugins.theme',
-  require 'kickstart.plugins.debug',
-  require 'kickstart.plugins.indent_line',
-  require 'kickstart.plugins.lint',
-  require 'kickstart.plugins.autopairs',
-  require 'kickstart.plugins.neo-tree',
-  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  require 'rv.plugins.debug',
+  require 'rv.plugins.indent_line',
+  require 'rv.plugins.lint',
+  require 'rv.plugins.autopairs',
+  require 'rv.plugins.neo-tree',
+  require 'rv.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   { import = 'rv.plugins' },
 }
