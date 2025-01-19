@@ -123,7 +123,7 @@ require('lazy').setup({
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+        { '<leader>g', group = '[G]it Hunk', mode = { 'n', 'v' } },
       },
     },
   },
@@ -156,20 +156,29 @@ require('lazy').setup({
       pcall(require('telescope').load_extension, 'ui-select')
 
       -- splits
+      vim.keymap.set('n', '<leader>wd', '<C-W>c', { desc = '[W]indow [D]elete' })
+      vim.keymap.set('n', '<leader>wv', '<C-W>v', { desc = '[W]indow [V]split' })
+      vim.keymap.set('n', '<leader>ws', '<C-W>s', { desc = '[W]indow [S]plit horizontal' })
+      vim.keymap.set('n', '<leader>wD', '<C-W>o!', { desc = '[W]indow [D]elete others' })
 
+      -- [[ Telescope ]]
       local builtin = require 'telescope.builtin'
-      vim.keymap.set('n', '<leader>h', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader><leader>', builtin.find_files, { desc = '[ ] Quick Search Files' })
-      vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
+      vim.keymap.set('n', '<leader>st', builtin.builtin, { desc = '[S]earch [T]elescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-      vim.keymap.set('n', '<leader>.', builtin.live_grep, { desc = '[.] Search by Grep' })
+      vim.keymap.set('n', '<leader>,', builtin.live_grep, { desc = '[,] Search by Grep' })
+
+      -- Search through diagnostics (errors, warnings, etc.)
+      -- Good binding, follows the search prefix pattern
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-      vim.keymap.set('n', '<leader>,', builtin.oldfiles, { desc = '[,] Search Recent Files' })
+      vim.keymap.set('n', '<leader>.', builtin.oldfiles, { desc = '[,] Search Recent Files' })
       vim.keymap.set('n', '<leader>b', builtin.buffers, { desc = 'Find existing [b]uffers' })
 
+      -- Fuzzy search in current buffer
+      -- Uses dropdown theme with slight transparency (winblend)
+      -- Good binding, mirrors vim's '/' search
       vim.keymap.set('n', '<leader>/', function()
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
           winblend = 10,
@@ -177,6 +186,8 @@ require('lazy').setup({
         })
       end, { desc = '[/] Fuzzily search in current buffer' })
 
+      -- Live grep but only in open files
+      -- Good binding, logical extension of standard grep
       vim.keymap.set('n', '<leader>s/', function()
         builtin.live_grep {
           grep_open_files = true,
@@ -184,6 +195,8 @@ require('lazy').setup({
         }
       end, { desc = '[S]earch [/] in Open Files' })
 
+      -- Search in neovim config files
+      -- Could use <leader>sc for 'search config' to be more generic
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
