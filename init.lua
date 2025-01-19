@@ -1,6 +1,6 @@
-require 'options'
-require 'keymaps'
-require 'autocmds'
+require 'config.options'
+require 'config.keymaps'
+require 'config.autocmds'
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -22,7 +22,6 @@ require('lazy').setup {
   require 'plugins.telescope',
   require 'plugins.lsp',
   require 'plugins.theme',
- 
 
   { import = 'rv.plugins' },
 }
