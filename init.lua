@@ -22,12 +22,7 @@ require('lazy').setup {
   require 'plugins.telescope',
   require 'plugins.lsp',
   require 'plugins.theme',
-  require 'rv.plugins.debug',
-  require 'rv.plugins.indent_line',
-  require 'rv.plugins.lint',
-  require 'rv.plugins.autopairs',
-  require 'rv.plugins.neo-tree',
-  require 'rv.plugins.gitsigns', -- adds gitsigns recommend keymaps
+ 
 
   { import = 'rv.plugins' },
 }
