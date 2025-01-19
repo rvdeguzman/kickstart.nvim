@@ -34,7 +34,17 @@ return {
     })
   end,
   opts = {
+    enable_git_status = true,
+    enable_diagnostics = true,
+    follow_current_file = {
+      enabled = true,
+      leave_dirs_open = true,
+    },
     filesystem = {
+      follow_current_file = {
+        enabled = true,
+        leave_dirs_open = true,
+      },
       window = {
         position = 'right',
         mappings = {
