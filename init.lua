@@ -32,6 +32,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 vim.keymap.set('n', '<leader>Q', '<cmd>qa!<CR>', { desc = 'Quit nvim' })
+vim.keymap.set('n', '<C-q>', '<cmd>qa!<CR>', { desc = 'Quit nvim' })
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
@@ -159,7 +160,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>wd', '<C-W>c', { desc = '[W]indow [D]elete' })
       vim.keymap.set('n', '<leader>wv', '<C-W>v', { desc = '[W]indow [V]split' })
       vim.keymap.set('n', '<leader>ws', '<C-W>s', { desc = '[W]indow [S]plit horizontal' })
-      vim.keymap.set('n', '<leader>wD', '<C-W>o!', { desc = '[W]indow [D]elete others' })
+      vim.keymap.set('n', '<leader>wo', '<C-W>o!', { desc = '[W]indow Delete [O]thers' })
 
       -- [[ Telescope ]]
       local builtin = require 'telescope.builtin'
@@ -175,7 +176,6 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>.', builtin.oldfiles, { desc = '[,] Search Recent Files' })
       vim.keymap.set('n', '<leader>b', builtin.buffers, { desc = 'Find existing [b]uffers' })
-
       -- Fuzzy search in current buffer
       -- Uses dropdown theme with slight transparency (winblend)
       -- Good binding, mirrors vim's '/' search
