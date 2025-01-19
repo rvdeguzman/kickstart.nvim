@@ -11,21 +11,7 @@ return {
   },
   cmd = 'Neotree',
   keys = {
-    { '<leader>e', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
-    {
-      '<leader>be',
-      function()
-        require('neo-tree.command').execute { source = 'buffers', toggle = true }
-      end,
-      desc = 'Buffer Explorer',
-    },
-    {
-      '<leader>ge',
-      function()
-        require('neo-tree.command').execute { source = 'git_status', toggle = true }
-      end,
-      desc = 'Git Explorer',
-    },
+    { '<leader>e', ':Neotree toggle<CR>', desc = 'Toggle NeoTree', silent = true },
   },
   deactivate = function()
     vim.cmd [[Neotree close]]
