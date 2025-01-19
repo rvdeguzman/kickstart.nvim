@@ -40,15 +40,14 @@ return {
             dashboard.button("q", " quit", ":qa<CR>"),
             
         }
-               local function footer()
-             local total_plugins = #vim.tbl_keys(require("lazy").plugins())
-             local datetime = os.date(" %m-%d-%Y   %H:%M")
-             local version = vim.version()
-             local nvim_version_info = "   v" .. version.major .. "." .. version.minor .. "." .. version.patch
- 
-             return "rv dgzzz" .. datetime .. "   " .. total_plugins .. " plugins" .. nvim_version_info
-         end
- 
+             local function footer()
+                 local total_plugins = #vim.tbl_keys(require("lazy").plugins())
+                 local datetime = os.date("  %H:%M   %d-%m-%Y")
+                 local version = vim.version()
+                 local nvim_version_info = "  v" .. version.major .. "." .. version.minor .. "." .. version.patch
+             
+                   return "󰚌 rv dgzzz" .. datetime .. "   " .. total_plugins .. " plugins" .. nvim_version_info
+         end 
          dashboard.section.footer.val = footer()
         alpha.setup(dashboard.opts)
     end
