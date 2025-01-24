@@ -145,33 +145,5 @@ return {
         detached = vim.fn.has 'win32' == 0,
       },
     }
-
-    local dap = require 'dap'
-    dap.configurations.java = {
-      {
-        -- You need to extend the classPath to list your dependencies.
-        -- `nvim-jdtls` would automatically add the `classPaths` property if it is missing
-        classPaths = {},
-
-        -- If using multi-module projects, remove otherwise.
-        -- projectName = 'yourProjectName',
-
-        javaExec = '/usr/bin/java',
-        mainClass = 'Driver',
-
-        -- If using the JDK9+ module system, this needs to be extended
-        -- `nvim-jdtls` would automatically populate this property
-        modulePaths = {},
-        name = 'Launch Driver',
-        request = 'launch',
-        type = 'java',
-      },
-      {
-        javaExec = 'java',
-        request = 'launch',
-        type = 'java',
-        name = 'rawdog',
-      },
-    }
   end,
 }
