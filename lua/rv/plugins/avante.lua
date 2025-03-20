@@ -4,7 +4,6 @@ return {
   version = false, -- Never set this value to "*"! Never!
   opts = {
     -- add any opts here
-    -- for example
     provider = 'claude',
     openai = {
       endpoint = 'https://api.openai.com/v1',
@@ -21,6 +20,26 @@ return {
       temperature = 0,
       max_tokens = 4096,
       -- disabled_tools = { 'python' },
+    },
+    -- Improve UI configuration
+    ui = {
+      width = 80, -- Set a consistent width that doesn't clash with other tools
+      position = 'right', -- Keep position consistent
+      enter_insert_mode = true, -- Auto-enter insert mode when opening chat
+    },
+    -- Configure file selector for better compatibility
+    file_selector = {
+      provider = 'telescope', -- Use telescope for file selection
+    },
+    commands = {
+      ask = {
+        prompt_prefix = "I'm looking at the following files in my project: ", -- Better default prompt
+      },
+    },
+    -- Add key mappings to avoid conflicts
+    -- Note: These mappings are set through vim.keymap.set in your config
+    key_mappings = {
+      toggle = '<leader>at', -- Use "a" prefix for avante to differentiate from codecompanion
     },
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`

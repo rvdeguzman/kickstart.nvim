@@ -26,6 +26,12 @@ return {
               require('luasnip.loaders.from_lua').load { paths = vim.fn.stdpath 'config' .. '/lua/rv/snippets' }
               -- Load your custom snippets
               require('luasnip').filetype_extend('dart', { 'flutter' })
+              -- Add HTML, CSS, JavaScript, TypeScript, and Python snippet support
+              require('luasnip').filetype_extend('html', { 'html-es6-snippets' })
+              require('luasnip').filetype_extend('css', { 'css' })
+              require('luasnip').filetype_extend('javascript', { 'javascript', 'js-es6-snippets' })
+              require('luasnip').filetype_extend('typescript', { 'typescript', 'ts-es6-snippets' })
+              require('luasnip').filetype_extend('python', { 'python' })
             end,
           },
         },
@@ -34,10 +40,9 @@ return {
       'Nash0x7E2/awesome-flutter-snippets',
 
       -- Adds other completion capabilities.
-      --  nvim-cmp does not ship with all sources by default. They are split
-      --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      'hrsh7th/cmp-buffer',
     },
     config = function()
       -- See `:help cmp`
@@ -52,6 +57,20 @@ return {
           end,
         },
         completion = { completeopt = 'menu,menuone,noinsert' },
+        formatting = {
+          format = function(entry, vim_item)
+            -- Add source indicators to completion menu
+            vim_item.menu = ({
+              buffer = '[Buffer]',
+              nvim_lsp = '[LSP]',
+              luasnip = '[Snippet]',
+              copilot = '[Copilot]',
+              codecompanion = '[CodeComp]',
+              path = '[Path]',
+            })[entry.source.name]
+            return vim_item
+          end,
+        },
         mapping = cmp.mapping.preset.insert {
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -84,21 +103,35 @@ return {
           -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
           --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
         },
-        sources = {
-          { name = 'copilot', group_index = 2 },
+        sources = cmp.config.sources {
+          { name = 'nvim_lsp', priority = 1000 },
+          { name = 'copilot', priority = 900 },
+          { name = 'luasnip', priority = 800 },
+          { name = 'buffer', priority = 700 },
+          { name = 'path', priority = 600 },
           {
             name = 'lazydev',
             -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
-            group_index = 0,
-          },
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-          { name = 'path' },
-          per_filetype = {
-            codecompanion = { 'codecompanion' },
+            priority = 500,
           },
         },
+        -- Add filetype specific sources
+        filetype_specific_source_groups = {
+          codecompanion = {
+            { name = 'codecompanion' },
+          },
+        },
+        experimental = {
+          ghost_text = true, -- Show ghost text preview
+        },
       }
+
+      -- Set up buffer-specific completions
+      cmp.setup.filetype('Avante', {
+        sources = cmp.config.sources {
+          { name = 'buffer' },
+        },
+      })
     end,
   },
 }

@@ -21,9 +21,27 @@ vim.keymap.set('n', '<leader>wh', '<cmd>split<CR>', { desc = 'Split window [H]or
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic' })
 -- ai
-vim.keymap.set({ 'n', 'v' }, '<C-a>', '<cmd>CodeCompanionActions<cr>', { noremap = true, silent = true })
-vim.keymap.set({ 'n', 'v' }, '<LocalLeader>ac', '<cmd>CodeCompanionChat Toggle<cr>', { noremap = true, silent = true })
-vim.keymap.set('v', 'ga', '<cmd>CodeCompanionChat Add<cr>', { noremap = true, silent = true })
+--
+-- AI tool keymappings with distinct prefixes to avoid confusion
+-- Copilot keymaps
+vim.keymap.set('n', '<leader>cp', ':Copilot<CR>', { desc = 'Open [C]o[p]ilot', silent = true })
+vim.keymap.set('n', '<leader>ce', ':Copilot enable<CR>', { desc = '[C]opilot [E]nable', silent = true })
+vim.keymap.set('n', '<leader>cd', ':Copilot disable<CR>', { desc = '[C]opilot [D]isable', silent = true })
 
--- Expand 'cc' into 'CodeCompanion' in the command line
+-- CodeCompanion keymaps (using 'cc' prefix)
+vim.keymap.set({ 'n', 'v' }, '<leader>cca', '<cmd>CodeCompanionActions<cr>', { desc = '[C]ode[C]ompanion [A]ctions', noremap = true, silent = true })
+vim.keymap.set({ 'n', 'v' }, '<leader>cct', '<cmd>CodeCompanionChat Toggle<cr>', { desc = '[C]ode[C]ompanion Chat [T]oggle', noremap = true, silent = true })
+vim.keymap.set('v', '<leader>cca', '<cmd>CodeCompanionChat Add<cr>', { desc = '[C]ode[C]ompanion Chat [A]dd Selection', noremap = true, silent = true })
+vim.keymap.set('n', '<leader>ccs', '<cmd>CodeCompanionSummarize<cr>', { desc = '[C]ode[C]ompanion [S]ummarize', noremap = true, silent = true })
+vim.keymap.set('n', '<leader>ccf', '<cmd>CodeCompanionFix<cr>', { desc = '[C]ode[C]ompanion [F]ix', noremap = true, silent = true })
+
+-- Avante keymaps (using 'a' prefix)
+vim.keymap.set('n', '<leader>at', '<cmd>AvanteToggle<cr>', { desc = '[A]vante [T]oggle', noremap = true, silent = true })
+vim.keymap.set('n', '<leader>aa', '<cmd>AvanteAsk<cr>', { desc = '[A]vante [A]sk', noremap = true, silent = true })
+vim.keymap.set('v', '<leader>as', '<cmd>AvanteSubmit<cr>', { desc = '[A]vante [S]ubmit Selection', noremap = true, silent = true })
+vim.keymap.set('n', '<leader>ar', '<cmd>AvanteReset<cr>', { desc = '[A]vante [R]eset Conversation', noremap = true, silent = true })
+
+-- Expand 'cc' into 'CodeCompanion' in the command line (keep from original)
 vim.cmd [[cab cc CodeCompanion]]
+-- Add similar expansion for Avante
+vim.cmd [[cab av Avante]]
