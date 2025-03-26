@@ -91,7 +91,9 @@ return {
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
-          map('<leader>ss', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+          map('<leader>ss', function()
+            require('telescope.builtin').lsp_document_symbols { initial_text = '' }
+          end, '[D]ocument [S]ymbols')
 
           -- Fuzzy find all the symbols in your current workspace.
           --  Similar to document symbols, except searches over your entire project.
@@ -221,7 +223,7 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
-        'jdtls',
+        -- 'jdtls',
         'clangd',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
