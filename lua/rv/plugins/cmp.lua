@@ -125,13 +125,6 @@ return {
           ghost_text = true, -- Show ghost text preview
         },
       }
-
-      -- Set up buffer-specific completions
-      cmp.setup.filetype('Avante', {
-        sources = cmp.config.sources {
-          { name = 'buffer' },
-        },
-      })
     end,
   },
 }

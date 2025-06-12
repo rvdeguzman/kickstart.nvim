@@ -18,7 +18,7 @@ return {
       -- Auto-adjust sidebars to avoid conflicts
       sidebar = {
         width = 50,
-        position = 'right', -- To avoid conflicts with Avante's default position
+        position = 'right',
       },
       -- Set completions
       completions = {
