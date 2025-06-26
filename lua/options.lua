@@ -20,11 +20,10 @@ vim.opt.splitbelow = true
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
--- Indentation settings (2 spaces)
-vim.opt.expandtab = true -- Convert tabs to spaces
-vim.opt.tabstop = 2 -- Number of spaces tabs count for
-vim.opt.shiftwidth = 2 -- Size of an indent
-vim.opt.softtabstop = 2 -- Number of spaces tabs count for while editing
+vim.opt.expandtab = true
+vim.opt.tabstop = 4 -- Number of spaces tabs count for
+vim.opt.shiftwidth = 4 -- Size of an indent
+vim.opt.softtabstop = 4 -- Number of spaces tabs count for while editing
 
 vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
