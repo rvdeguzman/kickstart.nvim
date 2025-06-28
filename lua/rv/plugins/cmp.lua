@@ -76,29 +76,37 @@ return {
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
 
           ['<CR>'] = cmp.mapping.confirm { select = true },
-          ['<Tab>'] = cmp.mapping.select_next_item(),
-          ['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
-          ['<C-Space>'] = cmp.mapping.complete {},
+          -- replaces the default <C-n> and <C-p> mappings
+          ['<C-j>'] = cmp.mapping.select_next_item(),
+          ['<C-k>'] = cmp.mapping.select_prev_item(),
 
-          -- Think of <c-l> as moving to the right of your snippet expansion.
+          -- Think of <tab> as moving to the right of your snippet expansion.
           --  So if you have a snippet that's like:
           --  function $name($args)
           --    $body
           --  end
           --
-          -- <c-l> will move you to the right of each of the expansion locations.
-          -- <c-h> is similar, except moving you backwards.
-          ['<C-l>'] = cmp.mapping(function()
+          -- <tab> will move you to the right of each of the expansion locations.
+          -- <s-tab> is similar, except moving you backwards.
+
+          ['<Tab>'] = cmp.mapping(function(fallback)
             if luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
+            else
+              fallback()
             end
           end, { 'i', 's' }),
-          ['<C-h>'] = cmp.mapping(function()
+
+          ['<S-Tab>'] = cmp.mapping(function(fallback)
             if luasnip.locally_jumpable(-1) then
               luasnip.jump(-1)
+            else
+              fallback()
             end
           end, { 'i', 's' }),
+
+          ['<C-Space>'] = cmp.mapping.complete {},
 
           -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
           --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
