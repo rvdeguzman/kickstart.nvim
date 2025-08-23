@@ -22,6 +22,8 @@ vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 vim.opt.expandtab = true
 vim.opt.tabstop = 4 -- Number of spaces tabs count for
+vim.o.wrap = false
+vim.o.swapfile = false
 vim.opt.shiftwidth = 4 -- Size of an indent
 vim.opt.softtabstop = 4 -- Number of spaces tabs count for while editing
 
