@@ -14,18 +14,18 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.signcolumn = 'yes'
 vim.opt.updatetime = 250
+vim.opt.termguicolors = true
 vim.opt.timeoutlen = 300
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 vim.opt.expandtab = true
 vim.opt.tabstop = 4 -- Number of spaces tabs count for
-vim.o.wrap = false
-vim.o.swapfile = false
-vim.opt.shiftwidth = 4 -- Size of an indent
-vim.opt.softtabstop = 4 -- Number of spaces tabs count for while editing
+vim.opt.wrap = false
+vim.opt.swapfile = false
+vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 4
 
 vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
