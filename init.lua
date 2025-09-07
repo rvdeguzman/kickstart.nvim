@@ -6,6 +6,7 @@ vim.g.loaded_netrwPlugin = 1
 
 vim.g.have_nerd_font = true
 
+-- requires
 require('lsp')
 require('opts')
 require('plugins.oil')
@@ -16,7 +17,6 @@ require('plugins.tmux')
 require('plugins.telescope')
 require('plugins.mini')
 require('plugins.gitsigns')
-require('plugins.alpha')
 
 -- keymaps
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
