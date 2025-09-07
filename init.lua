@@ -14,7 +14,6 @@ require('plugins.nvim-tree')
 require('plugins.undotree')
 require('plugins.harpoon')
 require('plugins.tmux')
-require('plugins.telescope')
 require('plugins.mini')
 require('plugins.gitsigns')
 
@@ -27,25 +26,12 @@ vim.keymap.set('n', '<leader>wd', '<cmd>close<CR>')
 vim.pack.add({
     { src = 'https://github.com/ellisonleao/gruvbox.nvim' },
     { src = 'https://github.com/lukas-reineke/indent-blankline.nvim' },
-    { src = 'https://github.com/nvim-lualine/lualine.nvim' },
-    { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
-
 })
 
 vim.cmd.colorscheme 'gruvbox'
 
 -- indent blankline
 require("ibl").setup()
-
--- lualine
-require('lualine').setup {
-    options = {
-        theme = 'gruvbox',
-        globalstatus = true,
-        section_separators = '',
-        component_separators = '',
-    },
-}
 
 -- autocmds
 vim.api.nvim_create_autocmd("TextYankPost", {
