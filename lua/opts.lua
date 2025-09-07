@@ -17,8 +17,8 @@ vim.opt.signcolumn = 'yes'
 vim.opt.termguicolors = true
 
 -- timeouts
-vim.opt.timeoutlen = 300
-vim.opt.updatetime = 250
+vim.opt.timeoutlen = 500
+vim.opt.updatetime = 300
 
 -- splits
 vim.opt.splitright = true
@@ -34,11 +34,9 @@ vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.smartindent = true
 
-
 vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 vim.opt.scrolloff = 10
-
 
 vim.opt.clipboard = 'unnamedplus'
 
