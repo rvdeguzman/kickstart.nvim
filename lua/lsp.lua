@@ -9,7 +9,10 @@ require('mason').setup()
 
 pcall(function()
     require('mason-tool-installer').setup({
-        ensure_installed = { 'stylua', 'prettier', },
+        ensure_installed = {
+            'stylua',
+            'prettier',
+        },
         run_on_start = true,
     })
 end)
@@ -34,20 +37,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
         map('n', '[d', vim.diagnostic.goto_prev)
         map('n', ']d', vim.diagnostic.goto_next)
         map('n', '<leader>q', vim.diagnostic.setloclist)
-
-        local ok, tb = pcall(require, 'telescope.builtin')
-        if ok then
-            map('n', '<leader>ss', function()
-                tb.lsp_document_symbols({ initial_text = '' })
-            end)
-            map('n', '<leader>sf', function()
-                tb.lsp_document_symbols({
-                    initial_text = '',
-                    ignore_symbols = { 'variable' },
-                })
-            end)
-            map('n', '<leader>sS', tb.lsp_dynamic_workspace_symbols)
-        end
     end,
 })
 
