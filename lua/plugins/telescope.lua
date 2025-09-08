@@ -12,6 +12,10 @@ if ok then
         extensions = {
             ['ui-select'] = require('telescope.themes').get_dropdown(),
         },
+        defaults = {
+            border = true,
+            borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+        }
     })
 
     pcall(telescope.load_extension, 'fzf')
@@ -22,7 +26,7 @@ if ok then
     vim.keymap.set('n', '<leader>,', builtin.live_grep)
     vim.keymap.set('n', '<leader>.', builtin.oldfiles)
     vim.keymap.set('n', '<leader>/', function()
-        builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({
+        builtin.current_buffer_fuzzy_find(require('telescope.themes').get_cursor({
             previewer = false,
         }))
     end)
