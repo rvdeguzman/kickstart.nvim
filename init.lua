@@ -17,6 +17,7 @@ require('plugins.tmux')
 require('plugins.mini')
 require('plugins.gitsigns')
 require('plugins.telescope')
+require('plugins.alpha')
 
 -- keymaps
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -27,9 +28,21 @@ vim.keymap.set('n', '<leader>wd', '<cmd>close<CR>')
 vim.pack.add({
     { src = 'https://github.com/ellisonleao/gruvbox.nvim' },
     { src = 'https://github.com/lukas-reineke/indent-blankline.nvim' },
+    { src = 'https://github.com/nvim-lualine/lualine.nvim' },
+    { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
 })
 
 vim.cmd.colorscheme 'gruvbox'
+
+-- lualine
+require('lualine').setup {
+    options = {
+        theme = 'gruvbox',
+        globalstatus = true,
+        section_separators = '',
+        component_separators = '',
+    },
+}
 
 -- indent blankline
 require("ibl").setup()

@@ -6,7 +6,6 @@ require('mini.ai').setup()
 require('mini.surround').setup()
 require('mini.bracketed').setup()
 require('mini.comment').setup()
-require('mini.statusline').setup()
 require('mini.icons').setup()
 require('mini.extra').setup()
 
