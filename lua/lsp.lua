@@ -44,8 +44,9 @@ local lspconfig = require('lspconfig')
 local mlsp = require('mason-lspconfig')
 
 vim.pack.add({
-    'https://github.com/nvim-treesitter/nvim-treesitter',
-}, { build = ':TSUpdate' })
+    { src = 'https://github.com/nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+    { src = 'https://github.com/nvim-treesitter/nvim-treesitter-context' },
+})
 
 do
     local ok, ts = pcall(require, 'nvim-treesitter.configs')
