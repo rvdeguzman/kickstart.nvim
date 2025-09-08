@@ -26,11 +26,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end
 
         map('n', 'K', vim.lsp.buf.hover)
-        map('n', 'gd', vim.lsp.buf.definition)
         map('n', 'gD', vim.lsp.buf.declaration)
-        map('n', 'gi', vim.lsp.buf.implementation)
-        map('n', 'gr', vim.lsp.buf.references)
-        map('n', 'gt', vim.lsp.buf.type_definition)
+        -- map('n', 'gd', vim.lsp.buf.definition)
+        -- map('n', 'gi', vim.lsp.buf.implementation)
+        -- map('n', 'gr', vim.lsp.buf.references)
+        -- map('n', 'gt', vim.lsp.buf.type_definition)
         map('n', '<leader>rn', vim.lsp.buf.rename)
         map('n', '<leader>ca', vim.lsp.buf.code_action)
         map('n', '<leader>f', function() vim.lsp.buf.format({ async = true }) end)
