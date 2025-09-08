@@ -84,7 +84,6 @@ vim.opt.foldenable = true
 -- copilot
 vim.pack.add({
     { src = 'https://github.com/zbirenbaum/copilot.lua' },
-    { src = 'https://github.com/zbirenbaum/copilot-cmp' },
 })
 
 do
@@ -97,9 +96,8 @@ do
             hide_during_completion = true,
             keymap = {
                 accept = '<C-e>',
-                next = '<C-n>',
-                prev = '<C-p>',
-                dismiss = '<C-\\>',
+                next = '<M-]>',
+                prev = '<M-[>',
             },
         },
         panel = { enabled = false },
@@ -110,10 +108,6 @@ do
         },
     })
 end
-
-pcall(function()
-    require('copilot_cmp').setup()
-end)
 
 -- cmp
 vim.pack.add({
@@ -142,20 +136,30 @@ do
         mapping = cmp.mapping.preset.insert({
             ['<C-Space>'] = cmp.mapping.complete(),
             ['<CR>']      = cmp.mapping.confirm({ select = true }),
-            ['<C-e>']     = cmp.mapping.abort(),
-            ['<C-n>']     = cmp.mapping.select_next_item(),
-            ['<C-p>']     = cmp.mapping.select_prev_item(),
-            ['<Tab>']     = cmp.mapping(function(fb)
-                if has_ls and luasnip.expand_or_jumpable() then luasnip.expand_or_jump() else fb() end
+
+            ['<Tab>']     = cmp.mapping(function(fallback)
+                if cmp.visible() then
+                    cmp.select_next_item()
+                elseif has_ls and luasnip.expand_or_jumpable() then
+                    luasnip.expand_or_jump()
+                else
+                    fallback()
+                end
             end, { 'i', 's' }),
-            ['<S-Tab>']   = cmp.mapping(function(fb)
-                if has_ls and luasnip.jumpable(-1) then luasnip.jump(-1) else fb() end
+
+            ['<S-Tab>']   = cmp.mapping(function(fallback)
+                if cmp.visible() then
+                    cmp.select_prev_item()
+                elseif has_ls and luasnip.jumpable(-1) then
+                    luasnip.jump(-1)
+                else
+                    fallback()
+                end
             end, { 'i', 's' }),
         }),
         sources = cmp.config.sources({
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
-            { name = 'copilot' },
         }, {
             { name = 'path' },
             { name = 'buffer' },
