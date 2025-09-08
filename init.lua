@@ -16,6 +16,7 @@ require('plugins.harpoon')
 require('plugins.tmux')
 require('plugins.mini')
 require('plugins.gitsigns')
+require('plugins.telescope')
 
 -- keymaps
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')

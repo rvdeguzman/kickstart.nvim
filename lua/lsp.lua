@@ -90,16 +90,15 @@ vim.pack.add({
 do
     local ok, copilot = pcall(require, 'copilot')
     if not ok then return end
-
     copilot.setup({
         suggestion = {
             enabled = true,
             auto_trigger = true,
             hide_during_completion = true,
             keymap = {
-                accept = '<C-]>',
-                next = '<M-]>',
-                prev = '<M-[>',
+                accept = '<C-e>',
+                next = '<C-n>',
+                prev = '<C-p>',
                 dismiss = '<C-\\>',
             },
         },
