@@ -22,7 +22,7 @@ if ok then
     end, { desc = 'Harpoon: Quick menu' })
 
     for i = 1, 9 do
-        vim.keymap.set('n', '<M-' .. i .. '>', function()
+        vim.keymap.set('n', '<leader>' .. i, function()
             harpoon:list():select(i)
         end, { desc = 'Harpoon: Jump to ' .. i })
     end
