@@ -27,21 +27,39 @@ vim.keymap.set('n', '<leader>wv', '<cmd>vsplit<CR>')
 vim.keymap.set('n', '<leader>wd', '<cmd>close<CR>')
 
 vim.pack.add({
+    -- themes
+    { src = 'https://github.com/rktjmp/lush.nvim' },
     { src = 'https://github.com/ellisonleao/gruvbox.nvim' },
+    { src = 'https://github.com/sainnhe/gruvbox-material' },
+    { src = 'https://github.com/rebelot/kanagawa.nvim' },
+    { src = 'https://github.com/sainnhe/edge' },
+    { src = 'https://github.com/zenbones-theme/zenbones.nvim' },
+    { src = 'https://github.com/thesimonho/kanagawa-paper.nvim' },
+    { src = 'https://github.com/vague2k/vague.nvim' },
+ 
+    -- ui
     { src = 'https://github.com/lukas-reineke/indent-blankline.nvim' },
     { src = 'https://github.com/nvim-lualine/lualine.nvim' },
     { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
 })
 
-vim.cmd.colorscheme 'gruvbox'
+vim.cmd.colorscheme 'kanagawa-dragon'
 
 -- lualine
 require('lualine').setup {
     options = {
-        theme = 'gruvbox',
+        theme = 'kanagawa',
         globalstatus = true,
         section_separators = '',
         component_separators = '',
+    },
+    sections = {
+        lualine_c = {
+            {
+                'filename',
+                path = 1,
+            }
+        }
     },
 }
 
