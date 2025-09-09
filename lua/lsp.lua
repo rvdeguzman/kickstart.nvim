@@ -37,6 +37,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         map('n', '[d', vim.diagnostic.goto_prev)
         map('n', ']d', vim.diagnostic.goto_next)
         map('n', '<leader>q', vim.diagnostic.setloclist)
+        map('i', '<C-s>', vim.lsp.buf.signature_help)
     end,
 })
 
@@ -44,7 +45,7 @@ local lspconfig = require('lspconfig')
 local mlsp = require('mason-lspconfig')
 
 vim.pack.add({
-    { src = 'https://github.com/nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+    { src = 'https://github.com/nvim-treesitter/nvim-treesitter',        build = ':TSUpdate' },
     { src = 'https://github.com/nvim-treesitter/nvim-treesitter-context' },
 })
 
@@ -113,6 +114,7 @@ end
 -- cmp
 vim.pack.add({
     { src = 'https://github.com/hrsh7th/nvim-cmp' },
+    { src = 'https://github.com/hrsh7th/cmp-nvim-lsp-signature-help' },
     { src = 'https://github.com/hrsh7th/cmp-nvim-lsp' },
     { src = 'https://github.com/hrsh7th/cmp-buffer' },
     { src = 'https://github.com/hrsh7th/cmp-path' },
@@ -161,6 +163,7 @@ do
         sources = cmp.config.sources({
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
+            { name = 'nvim_lsp_signature_help' },
         }, {
             { name = 'path' },
             { name = 'buffer' },
@@ -174,21 +177,38 @@ if ok_cmp_lsp then
     capabilities = cmp_lsp.default_capabilities(capabilities)
 end
 
-mlsp.setup({
-    ensure_installed = {
-        'lua_ls',
-        'ts_ls',
-        'clangd',
-        'ruff',
-        'pyright',
+vim.lsp.config('lua_ls', {
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = { version = 'LuaJIT' },
+      diagnostics = { globals = { 'vim' } },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file('', true),
+        checkThirdParty = false,
+      },
+      telemetry = { enable = false },
     },
-    handlers = {
-        function(server)
-            lspconfig[server].setup({
-                capabilities = capabilities,
-            })
-        end,
+  },
+})
+
+vim.lsp.config('ts_ls', {
+  capabilities = capabilities,
+  settings = {
+    javascript = { suggest = { autoImports = true } },
+    typescript = {
+      inlayHints = {
+        includeInlayParameterNameHints = "all",
+        includeInlayVariableTypeHints = true,
+      },
     },
+  },
+})
+
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  ensure_installed = { 'lua_ls', 'ts_ls', 'clangd', 'ruff', 'pyright' },
+  automatic_enable = true,   -- mason-lspconfig will `vim.lsp.enable()` installed servers
 })
 
 vim.pack.add({
