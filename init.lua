@@ -36,19 +36,19 @@ vim.pack.add({
     { src = 'https://github.com/zenbones-theme/zenbones.nvim' },
     { src = 'https://github.com/thesimonho/kanagawa-paper.nvim' },
     { src = 'https://github.com/vague2k/vague.nvim' },
- 
+    { src = 'https://github.com/metalelf0/black-metal-theme-neovim'},
     -- ui
     { src = 'https://github.com/lukas-reineke/indent-blankline.nvim' },
     { src = 'https://github.com/nvim-lualine/lualine.nvim' },
     { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
 })
 
-vim.cmd.colorscheme 'kanagawa-dragon'
+vim.cmd.colorscheme 'dark-funeral'
 
 -- lualine
 require('lualine').setup {
     options = {
-        theme = 'kanagawa',
+        theme = 'auto',
         globalstatus = true,
         section_separators = '',
         component_separators = '',

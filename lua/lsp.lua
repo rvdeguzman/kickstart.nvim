@@ -34,8 +34,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
         map('n', '<leader>rn', vim.lsp.buf.rename)
         map('n', '<leader>ca', vim.lsp.buf.code_action)
         map('n', '<leader>f', function() vim.lsp.buf.format({ async = true }) end)
-        map('n', '[d', vim.diagnostic.goto_prev)
-        map('n', ']d', vim.diagnostic.goto_next)
+        map('n', '[d', function() vim.diagnostic.jump({count = -1, float=true}) end)
+        map('n', ']d', function() vim.diagnostic.jump({count = 1, float=true}) end)
         map('n', '<leader>q', vim.diagnostic.setloclist)
         map('i', '<C-s>', vim.lsp.buf.signature_help)
     end,
@@ -110,6 +110,11 @@ do
         },
     })
 end
+
+-- flutter
+vim.pack.add({
+    { src = 'https://github.com/nvim-flutter/flutter-tools.nvim'}
+})
 
 -- cmp
 vim.pack.add({
