@@ -1,7 +1,6 @@
-vim.pack.add({
-    { src = 'https://github.com/folke/flash.nvim' },
-})
-
+return {
+    'folke/flash.nvim',
+    config = function() 
 local ok, flash = pcall(require, 'flash')
 if not ok then
     vim.notify('flash.nvim not found (not loaded yet?)', vim.log.levels.WARN)
@@ -20,3 +19,7 @@ else
         flash.treesitter()
     end)
 end
+    end
+
+}
+

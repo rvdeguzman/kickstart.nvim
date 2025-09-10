@@ -41,3 +41,18 @@ vim.opt.scrolloff = 10
 
 vim.opt.clipboard = 'unnamedplus'
 
+vim.api.nvim_create_autocmd("TextYankPost", {
+    group = vim.api.nvim_create_augroup("HighlightYank", { clear = true }),
+    callback = function()
+        vim.highlight.on_yank({
+            timeout = 75,
+        })
+    end,
+})
+
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '<C-q>', '<cmd>qa!<CR>')
+vim.keymap.set('n', '<leader>wv', '<cmd>vsplit<CR>')
+vim.keymap.set('n', '<leader>wd', '<cmd>close<CR>')
+
+vim.cmd.colorscheme 'dark-funeral'

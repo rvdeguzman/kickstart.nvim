@@ -1,7 +1,8 @@
-vim.pack.add({ 
-    { src = 'https://github.com/ThePrimeagen/harpoon', version = 'harpoon2' },
-    { src = 'https://github.com/nvim-lua/plenary.nvim' },
-})
+return {
+    'ThePrimeagen/harpoon',
+    branch = 'harpoon2',
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
 local ok, harpoon = pcall(require, 'harpoon')
 if ok then
     harpoon:setup({
@@ -30,3 +31,7 @@ else
     vim.notify('Harpoon not installed!', vim.log.levels.WARN)
 end
 
+    end
+
+
+}

@@ -1,8 +1,7 @@
-vim.pack.add({
-    { src = 'https://github.com/stevearc/oil.nvim' },
-    { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
-})
-
+return {
+    'stevearc/oil.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
 local ok, oil = pcall(require, 'oil')
 if ok then
     oil.setup({
@@ -14,4 +13,5 @@ if ok then
 else
     vim.notify('oil.nvim not installed/loaded', vim.log.levels.WARN)
 end
-
+    end
+}

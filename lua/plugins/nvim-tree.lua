@@ -1,8 +1,7 @@
-vim.pack.add({
-    { src = 'https://github.com/nvim-tree/nvim-tree.lua' },
-    { src = 'https://github.com/nvim-tree/nvim-web-devicons' }, -- optional, for file icons
-})
-
+return {
+    'nvim-tree/nvim-tree.lua',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
 local ok, nvim_tree = pcall(require, 'nvim-tree')
 if ok then
     nvim_tree.setup({
@@ -23,3 +22,7 @@ else
     vim.notify('nvim-tree not installed/loaded', vim.log.levels.WARN)
 end
 
+    end
+
+
+}
