@@ -246,3 +246,44 @@ require('nvim-autopairs').setup()
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local cmp = require('cmp')
 cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+
+-- conform
+vim.pack.add({
+    { src = 'https://github.com/stevearc/conform.nvim' },
+})
+
+require('conform').setup({
+    formatters_by_ft = {
+        -- Conform will run multiple formatters sequentially
+        python = { "isort", "black" },
+        -- You can customize some of the format options for the filetype (:help conform.format)
+        -- Conform will run the first available formatter
+        javascript = { "prettierd", "prettier", stop_after_first = true },
+    },
+    format_on_save = {
+        timeout_ms = 500,
+        lsp_format = 'fallback'
+    },
+    formatters = {
+        -- formatter configs
+    }
+})
+
+-- nvim-lint
+vim.pack.add({
+    { src = 'https://github.com/mfussenegger/nvim-lint' }
+})
+
+-- set up linters
+require('lint').linters_by_ft = {
+    python = { 'ruff' },
+}
+
+-- try lint on save
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+    callback = function()
+        -- try_lint without arguments runs the linters defined in `linters_by_ft`
+        -- for the current filetype
+        require("lint").try_lint()
+    end,
+})
