@@ -10,7 +10,6 @@ vim.g.have_nerd_font = true
 require('lsp')
 require('opts')
 require('plugins.oil')
-require('plugins.nvim-tree')
 require('plugins.undotree')
 require('plugins.harpoon')
 require('plugins.tmux')

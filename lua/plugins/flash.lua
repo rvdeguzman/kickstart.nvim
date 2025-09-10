@@ -6,7 +6,12 @@ local ok, flash = pcall(require, 'flash')
 if not ok then
     vim.notify('flash.nvim not found (not loaded yet?)', vim.log.levels.WARN)
 else
-    flash.setup()
+    require('flash').setup {
+        mode = 'search',
+        prompt = {
+            enabled = false,
+        }
+    }
 
     vim.keymap.set({ 'n', 'x', 'o' }, 'f', function()
         flash.jump()
