@@ -193,15 +193,11 @@ return {
 
             -- java
             local home = os.getenv('HOME')
-            local jdtls = require('jdtls')
-
-            local java_21_path = home .. "/.sdkman/candidates/java/21.0.8-tem"
-            local java_17_path = home .. "/.sdkman/candidates/java/17.0.10-tem"
             local current_path = home .. "/.sdkman/candidates/java/current"
             local lombok_path = home .. "/.local/share/nvim/mason/packages/jdtls/lombok.jar"
-
             local root_markers = { 'gradlew', 'mvnw', '.git' }
             local root_dir = require('jdtls.setup').find_root(root_markers)
+            local workspace_folder = home .. "/.local/share/eclipse/" .. vim.fn.fnamemodify(root_dir, ':p:h:t')
 
             vim.lsp.config('jdtls', {
                 settings = {
