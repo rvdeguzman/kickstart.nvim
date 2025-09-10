@@ -235,10 +235,41 @@ return {
     },
     -- conform
     {
+        'stevearc/conform.nvim',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+        config = function()
+            require('conform').setup({
+                formatters_by_ft = {
+                    -- Conform will run multiple formatters sequentially
+                    python = { "isort", "black" },
+                    -- You can customize some of the format options for the filetype (:help conform.format)
+                    -- Conform will run the first available formatter
+                    javascript = { "prettierd", "prettier", stop_after_first = true },
+                },
+                format_on_save = {
+                    timeout_ms = 500,
+                    lsp_format = 'fallback'
+                },
+                formatters = {
+                    -- formatter configs
+                }
+            })
+        end,
 
     },
     -- nvim-lint
     {
+        'mfussenegger/nvim-lint',
+        config = function()
+            require('lint').linters_by_ft = {
+                python = { 'ruff' },
+            }
 
+            vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+                callback = function()
+                    require("lint").try_lint()
+                end,
+            })
+        end,
     },
 }
