@@ -3,26 +3,20 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
         local nvim_tree = require('nvim-tree')
-if ok then
-    nvim_tree.setup({
-        sync_root_with_cwd = true,
-        view = { width = 32, side = 'right' },
-        renderer = { group_empty = true },
-        filters = { dotfiles = false },
-        update_focused_file = { enable = true },
-        actions = {
-            open_file = {
-                quit_on_open = true,
+        nvim_tree.setup({
+            sync_root_with_cwd = true,
+            view = { width = 32, side = 'right' },
+            renderer = { group_empty = true },
+            filters = { dotfiles = false },
+            update_focused_file = { enable = true },
+            actions = {
+                open_file = {
+                    quit_on_open = true,
+                }
             }
-        }
-    })
-    local api = require('nvim-tree.api')
-    vim.keymap.set('n', '<leader>e', api.tree.toggle)
-else
-    vim.notify('nvim-tree not installed/loaded', vim.log.levels.WARN)
-end
-
+        })
+        local api = require('nvim-tree.api')
+        vim.keymap.set('n', '<leader>e', api.tree.toggle)
+        vim.notify('nvim-tree not installed/loaded', vim.log.levels.WARN)
     end
-
-
 }

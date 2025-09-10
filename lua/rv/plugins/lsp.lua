@@ -94,15 +94,15 @@ return {
             "saadparwaiz1/cmp_luasnip",
         },
         config = function()
-            cmp = require('cmp')
-            luasnip = require('luasnip')
+            local cmp = require('cmp')
+            local luasnip = require('luasnip')
 
             vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
             cmp.setup({
                 snippet = {
                     expand = function(args)
-                        if has_ls then luasnip.lsp_expand(args.body) end
+                        luasnip.lsp_expand(args.body)
                     end,
                 },
                 mapping = cmp.mapping.preset.insert({
@@ -112,7 +112,7 @@ return {
                     ['<Tab>'] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.select_next_item()
-                        elseif has_ls and luasnip.expand_or_jumpable() then
+                        elseif luasnip.expand_or_jumpable() then
                             luasnip.expand_or_jump()
                         else
                             fallback()
@@ -122,7 +122,7 @@ return {
                     ['<S-Tab>'] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.select_prev_item()
-                        elseif has_ls and luasnip.jumpable(-1) then
+                        elseif luasnip.jumpable(-1) then
                             luasnip.jump(-1)
                         else
                             fallback()
@@ -204,7 +204,7 @@ return {
                             '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
                             '-javaagent:' .. lombok_path,
                             '-jar', vim.fn.glob(home ..
-                        '/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
+                            '/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
                             '-configuration', home .. '/.local/share/nvim/mason/packages/jdtls/config_mac_arm',
                             '-data', workspace_folder,
                         }
@@ -232,5 +232,13 @@ return {
             local cmp = require('cmp')
             cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
         end,
-    }
+    },
+    -- conform
+    {
+
+    },
+    -- nvim-lint
+    {
+
+    },
 }
