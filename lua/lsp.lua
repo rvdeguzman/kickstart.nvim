@@ -34,8 +34,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
         map('n', '<leader>rn', vim.lsp.buf.rename)
         map('n', '<leader>ca', vim.lsp.buf.code_action)
         map('n', '<leader>f', function() vim.lsp.buf.format({ async = true }) end)
-        map('n', '[d', function() vim.diagnostic.jump({count = -1, float=true}) end)
-        map('n', ']d', function() vim.diagnostic.jump({count = 1, float=true}) end)
+        map('n', '[d', function() vim.diagnostic.jump({ count = -1, float = true }) end)
+        map('n', ']d', function() vim.diagnostic.jump({ count = 1, float = true }) end)
         map('n', '<leader>q', vim.diagnostic.setloclist)
         map('i', '<C-s>', vim.lsp.buf.signature_help)
     end,
@@ -113,7 +113,7 @@ end
 
 -- flutter
 vim.pack.add({
-    { src = 'https://github.com/nvim-flutter/flutter-tools.nvim'}
+    { src = 'https://github.com/nvim-flutter/flutter-tools.nvim' }
 })
 
 -- cmp
@@ -183,37 +183,76 @@ if ok_cmp_lsp then
 end
 
 vim.lsp.config('lua_ls', {
-  capabilities = capabilities,
-  settings = {
-    Lua = {
-      runtime = { version = 'LuaJIT' },
-      diagnostics = { globals = { 'vim' } },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file('', true),
-        checkThirdParty = false,
-      },
-      telemetry = { enable = false },
+    capabilities = capabilities,
+    settings = {
+        Lua = {
+            runtime = { version = 'LuaJIT' },
+            diagnostics = { globals = { 'vim' } },
+            workspace = {
+                library = vim.api.nvim_get_runtime_file('', true),
+                checkThirdParty = false,
+            },
+            telemetry = { enable = false },
+        },
     },
-  },
 })
 
 vim.lsp.config('ts_ls', {
-  capabilities = capabilities,
-  settings = {
-    javascript = { suggest = { autoImports = true } },
-    typescript = {
-      inlayHints = {
-        includeInlayParameterNameHints = "all",
-        includeInlayVariableTypeHints = true,
-      },
+    capabilities = capabilities,
+    settings = {
+        javascript = { suggest = { autoImports = true } },
+        typescript = {
+            inlayHints = {
+                includeInlayParameterNameHints = "all",
+                includeInlayVariableTypeHints = true,
+            },
+        },
     },
-  },
 })
+
+
+-- java
+vim.pack.add({
+    { src = 'https://github.com/mfussenegger/nvim-jdtls' }
+})
+
+local home = os.getenv('HOME')
+local current_path = home .. "/.sdkman/candidates/java/current"
+local lombok_path = home .. "/.local/share/nvim/mason/packages/jdtls/lombok.jar"
+local root_markers = { 'gradlew', 'mvnw', '.git' }
+local root_dir = require('jdtls.setup').find_root(root_markers)
+local workspace_folder = home .. "/.local/share/eclipse/" .. vim.fn.fnamemodify(root_dir, ':p:h:t')
+
+vim.lsp.config('jdtls', {
+    settings = {
+        java = {
+            signatureHelp = { enabled = true },
+            cmd = {
+                current_path .. "/bin/java",
+                '-Declipse.application=org.eclipse.jdt.ls.core.id1',
+                '-Dosgi.bundles.defaultStartLevel=4',
+                '-Declipse.product=org.eclipse.jdt.ls.core.product',
+                '-Dlog.protocol=true',
+                '-Dlog.level=ALL',
+                '-Xmx4g',
+                '--add-modules=ALL-SYSTEM',
+                '--add-opens', 'java.base/java.util=ALL-UNNAMED',
+                '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+                '-javaagent:' .. lombok_path,
+                '-jar', vim.fn.glob(home ..
+                '/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
+                '-configuration', home .. '/.local/share/nvim/mason/packages/jdtls/config_mac_arm',
+                '-data', workspace_folder,
+            }
+        }
+    }
+})
+vim.lsp.enable('jdtls')
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = { 'lua_ls', 'ts_ls', 'clangd', 'ruff', 'pyright' },
-  automatic_enable = true,   -- mason-lspconfig will `vim.lsp.enable()` installed servers
+    ensure_installed = { 'lua_ls', 'ts_ls', 'clangd', 'ruff', 'pyright' },
+    automatic_enable = true, -- mason-lspconfig will `vim.lsp.enable()` installed servers
 })
 
 vim.pack.add({
