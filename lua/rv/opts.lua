@@ -39,8 +39,6 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 
-vim.opt.clipboard = 'unnamedplus'
-
 vim.api.nvim_create_autocmd("TextYankPost", {
     group = vim.api.nvim_create_augroup("HighlightYank", { clear = true }),
     callback = function()
@@ -50,7 +48,3 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     end,
 })
 
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-vim.keymap.set('n', '<C-q>', '<cmd>qa!<CR>')
-vim.keymap.set('n', '<leader>wv', '<cmd>vsplit<CR>')
-vim.keymap.set('n', '<leader>wd', '<cmd>close<CR>')
