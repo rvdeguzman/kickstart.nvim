@@ -31,9 +31,7 @@ if ok then
         }))
     end)
     vim.keymap.set('n', '<leader>ss', function()
-        builtin.lsp_document_symbols({
-            --initial_text = '',
-        })
+        builtin.lsp_document_symbols()
     end)
 
     vim.keymap.set('n', '<leader>st', builtin.treesitter)

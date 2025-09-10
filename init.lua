@@ -14,7 +14,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('lsp')
 require('opts')
 
 vim.g.mapleader = ' '
@@ -31,4 +30,7 @@ require("lazy").setup({
     },
 })
 
-
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '<C-q>', '<cmd>qa!<CR>')
+vim.keymap.set('n', '<leader>wv', '<cmd>vsplit<CR>')
+vim.keymap.set('n', '<leader>wd', '<cmd>close<CR>')

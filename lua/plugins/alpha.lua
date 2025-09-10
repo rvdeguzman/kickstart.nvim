@@ -38,6 +38,7 @@ return {
       dashboard.button("c", "  config", function()
         require('telescope.builtin').find_files({ cwd = vim.fn.stdpath('config') })
       end),
+      dashboard.button("l", "  lazy", ":Lazy<CR>"),
       dashboard.button("m", "  mason", ":Mason<CR>"),
       dashboard.button("q", "  quit", ":qa<CR>"),
     }

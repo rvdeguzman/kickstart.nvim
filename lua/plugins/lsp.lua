@@ -1,4 +1,5 @@
 return {
+    {
         "williamboman/mason.nvim",
         dependencies = {
             "williamboman/mason-lspconfig.nvim",
@@ -87,37 +88,6 @@ return {
         end,
     },
     {
-        "zbirenbaum/copilot.lua",
-        event = "InsertEnter",
-        config = function()
-            local ok, copilot = pcall(require, 'copilot')
-            if not ok then return end
-
-            copilot.setup({
-                suggestion = {
-                    enabled = true,
-                    auto_trigger = true,
-                    hide_during_completion = true,
-                    keymap = {
-                        accept = '<C-e>',
-                        next = '<M-]>',
-                        prev = '<M-[>',
-                    },
-                },
-                panel = { enabled = false },
-                filetypes = {
-                    markdown = true,
-                    help = true,
-                    ['*'] = true,
-                },
-            })
-        end,
-    },
-    {
-        "nvim-flutter/flutter-tools.nvim",
-        ft = "dart",
-    },
-    {
         "hrsh7th/nvim-cmp",
         event = "InsertEnter",
         dependencies = {
@@ -186,6 +156,7 @@ return {
             "hrsh7th/cmp-nvim-lsp",
         },
         config = function()
+            require('mason').setup()
             local capabilities = vim.lsp.protocol.make_client_capabilities()
             local ok_cmp_lsp, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
             if ok_cmp_lsp then
@@ -220,7 +191,42 @@ return {
                 },
             })
 
-            -- Setup mason-lspconfig
+            -- java
+            local home = os.getenv('HOME')
+            local jdtls = require('jdtls')
+
+            local java_21_path = home .. "/.sdkman/candidates/java/21.0.8-tem"
+            local java_17_path = home .. "/.sdkman/candidates/java/17.0.10-tem"
+            local current_path = home .. "/.sdkman/candidates/java/current"
+            local lombok_path = home .. "/.local/share/nvim/mason/packages/jdtls/lombok.jar"
+
+            local root_markers = { 'gradlew', 'mvnw', '.git' }
+            local root_dir = require('jdtls.setup').find_root(root_markers)
+
+            vim.lsp.config('jdtls', {
+                settings = {
+                    java = {
+                        signatureHelp = { enabled = true },
+                        cmd = {
+                            current_path .. "/bin/java",
+                            '-Declipse.application=org.eclipse.jdt.ls.core.id1',
+                            '-Dosgi.bundles.defaultStartLevel=4',
+                            '-Declipse.product=org.eclipse.jdt.ls.core.product',
+                            '-Dlog.protocol=true',
+                            '-Dlog.level=ALL',
+                            '-Xmx4g',
+                            '--add-modules=ALL-SYSTEM',
+                            '--add-opens', 'java.base/java.util=ALL-UNNAMED',
+                            '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+                            '-javaagent:' .. lombok_path,
+                            '-jar', vim.fn.glob(home .. '/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
+                            '-configuration', home .. '/.local/share/nvim/mason/packages/jdtls/config_mac_arm',
+                            '-data', workspace_folder,
+                        }
+                    }
+                }
+            })
+            vim.lsp.enable('jdtls')
             require('mason-lspconfig').setup({
                 ensure_installed = { 'lua_ls', 'ts_ls', 'clangd', 'ruff', 'pyright' },
                 automatic_enable = true,
@@ -245,3 +251,4 @@ return {
             cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
         end,
     }
+}
