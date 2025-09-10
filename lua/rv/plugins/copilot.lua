@@ -2,9 +2,7 @@ return {
     "zbirenbaum/copilot.lua",
     event = "InsertEnter",
     config = function()
-        local ok, copilot = pcall(require, 'copilot')
-        if not ok then return end
-
+        local copilot = require('copilot')
         copilot.setup({
             suggestion = {
                 enabled = true,

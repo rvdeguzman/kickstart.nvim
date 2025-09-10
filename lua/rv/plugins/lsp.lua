@@ -8,15 +8,13 @@ return {
         },
         config = function()
             require('mason').setup()
-            pcall(function()
-                require('mason-tool-installer').setup({
-                    ensure_installed = {
-                        'stylua',
-                        'prettier',
-                    },
-                    run_on_start = true,
-                })
-            end)
+            require('mason-tool-installer').setup({
+                ensure_installed = {
+                    'stylua',
+                    'prettier',
+                },
+                run_on_start = true,
+            })
         end,
     },
     {
@@ -54,13 +52,7 @@ return {
             "nvim-treesitter/nvim-treesitter-context",
         },
         config = function()
-            local ok, ts = pcall(require, 'nvim-treesitter.configs')
-            if not ok then
-                vim.notify('nvim-treesitter not loaded', vim.log.levels.WARN)
-                return
-            end
-
-            ts.setup({
+            require('nvim-treesitter.configs').setup({
                 ensure_installed = {
                     'lua', 'vim', 'vimdoc',
                     'javascript', 'typescript',
@@ -102,10 +94,8 @@ return {
             "saadparwaiz1/cmp_luasnip",
         },
         config = function()
-            local ok, cmp = pcall(require, 'cmp')
-            if not ok then return end
-
-            local has_ls, luasnip = pcall(require, 'luasnip')
+            cmp = require('cmp')
+            luasnip = require('luasnip')
 
             vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
@@ -161,11 +151,6 @@ return {
         config = function()
             require('mason').setup()
             local capabilities = vim.lsp.protocol.make_client_capabilities()
-            local ok_cmp_lsp, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
-            if ok_cmp_lsp then
-                capabilities = cmp_lsp.default_capabilities(capabilities)
-            end
-
             vim.lsp.config('lua_ls', {
                 capabilities = capabilities,
                 settings = {
@@ -218,7 +203,8 @@ return {
                             '--add-opens', 'java.base/java.util=ALL-UNNAMED',
                             '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
                             '-javaagent:' .. lombok_path,
-                            '-jar', vim.fn.glob(home .. '/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
+                            '-jar', vim.fn.glob(home ..
+                        '/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
                             '-configuration', home .. '/.local/share/nvim/mason/packages/jdtls/config_mac_arm',
                             '-data', workspace_folder,
                         }
@@ -240,10 +226,7 @@ return {
             "hrsh7th/nvim-cmp",
         },
         config = function()
-            local ok, npairs = pcall(require, 'nvim-autopairs')
-            if not ok then return end
-
-            npairs.setup({})
+            require('nvim-autopairs').setup()
 
             local cmp_autopairs = require('nvim-autopairs.completion.cmp')
             local cmp = require('cmp')

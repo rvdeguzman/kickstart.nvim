@@ -2,7 +2,7 @@ return {
     'nvim-tree/nvim-tree.lua',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-local ok, nvim_tree = pcall(require, 'nvim-tree')
+        local nvim_tree = require('nvim-tree')
 if ok then
     nvim_tree.setup({
         sync_root_with_cwd = true,

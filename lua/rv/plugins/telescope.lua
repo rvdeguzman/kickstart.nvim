@@ -39,12 +39,7 @@ return {
     { "<leader>ws", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", desc = "Workspace symbols" },
   },
   config = function()
-    local ok, telescope = pcall(require, 'telescope')
-    if not ok then
-      vim.notify('telescope.nvim not found', vim.log.levels.WARN)
-      return
-    end
-
+    local telescope = require('telescope')
     telescope.setup({
       extensions = {
         ['ui-select'] = require('telescope.themes').get_dropdown(),
@@ -55,7 +50,7 @@ return {
       }
     })
 
-    pcall(telescope.load_extension, 'fzf')
-    pcall(telescope.load_extension, 'ui-select')
-  end,
+    telescope.load_extension('fzf')
+    telescope.load_extension('ui-select')
+    end,
 }
