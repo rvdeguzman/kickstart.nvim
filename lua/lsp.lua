@@ -48,33 +48,25 @@ vim.pack.add({
     { src = 'https://github.com/nvim-treesitter/nvim-treesitter',        build = ':TSUpdate' },
     { src = 'https://github.com/nvim-treesitter/nvim-treesitter-context' },
 })
-
-do
-    local ok, ts = pcall(require, 'nvim-treesitter.configs')
-    if not ok then
-        vim.notify('nvim-treesitter not loaded', vim.log.levels.WARN)
-        return
-    end
-
-    ts.setup({
-        ensure_installed      = {
-            'lua', 'vim', 'vimdoc',
-            'javascript', 'typescript',
-            'c', 'cpp',
-            'python',
+local ts = require('nvim-treesitter.configs')
+ts.setup({
+    ensure_installed      = {
+        'lua', 'vim', 'vimdoc',
+        'javascript', 'typescript',
+        'c', 'cpp',
+        'python',
+    },
+    highlight             = { enable = true, additional_vim_regex_highlighting = false },
+    indent                = { enable = true },
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection   = '<CR>',
+            node_incremental = '<CR>',
+            node_decremental = '<BS>',
         },
-        highlight             = { enable = true, additional_vim_regex_highlighting = false },
-        indent                = { enable = true },
-        incremental_selection = {
-            enable = true,
-            keymaps = {
-                init_selection   = '<CR>',
-                node_incremental = '<CR>',
-                node_decremental = '<BS>',
-            },
-        },
-    })
-end
+    },
+})
 
 -- treesitter folding
 vim.opt.foldmethod = 'expr'
@@ -88,28 +80,25 @@ vim.pack.add({
     { src = 'https://github.com/zbirenbaum/copilot.lua' },
 })
 
-do
-    local ok, copilot = pcall(require, 'copilot')
-    if not ok then return end
-    copilot.setup({
-        suggestion = {
-            enabled = true,
-            auto_trigger = true,
-            hide_during_completion = true,
-            keymap = {
-                accept = '<C-e>',
-                next = '<M-]>',
-                prev = '<M-[>',
-            },
+local copilot = require('copilot')
+copilot.setup({
+    suggestion = {
+        enabled = true,
+        auto_trigger = true,
+        hide_during_completion = true,
+        keymap = {
+            accept = '<C-e>',
+            next = '<M-]>',
+            prev = '<M-[>',
         },
-        panel = { enabled = false },
-        filetypes = {
-            markdown = true,
-            help = true,
-            ['*'] = true,
-        },
-    })
-end
+    },
+    panel = { enabled = false },
+    filetypes = {
+        markdown = true,
+        help = true,
+        ['*'] = true,
+    },
+})
 
 -- flutter
 vim.pack.add({
@@ -127,60 +116,54 @@ vim.pack.add({
     { src = 'https://github.com/saadparwaiz1/cmp_luasnip' },
 })
 
-do
-    local ok, cmp = pcall(require, 'cmp')
-    if not ok then return end
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
-    local has_ls, luasnip = pcall(require, 'luasnip')
+local cmp = require('cmp')
+local luasnip = require('luasnip')
 
-    vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+cmp.setup({
+    snippet = {
+        expand = function(args)
+            luasnip.lsp_expand(args.body)
+        end,
+    },
+    mapping = cmp.mapping.preset.insert({
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<CR>']      = cmp.mapping.confirm({ select = true }),
 
-    cmp.setup({
-        snippet = {
-            expand = function(args)
-                if has_ls then luasnip.lsp_expand(args.body) end
-            end,
-        },
-        mapping = cmp.mapping.preset.insert({
-            ['<C-Space>'] = cmp.mapping.complete(),
-            ['<CR>']      = cmp.mapping.confirm({ select = true }),
+        ['<Tab>']     = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            else
+                fallback()
+            end
+        end, { 'i', 's' }),
 
-            ['<Tab>']     = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.select_next_item()
-                elseif has_ls and luasnip.expand_or_jumpable() then
-                    luasnip.expand_or_jump()
-                else
-                    fallback()
-                end
-            end, { 'i', 's' }),
-
-            ['<S-Tab>']   = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.select_prev_item()
-                elseif has_ls and luasnip.jumpable(-1) then
-                    luasnip.jump(-1)
-                else
-                    fallback()
-                end
-            end, { 'i', 's' }),
-        }),
-        sources = cmp.config.sources({
-            { name = 'nvim_lsp' },
-            { name = 'luasnip' },
-            { name = 'nvim_lsp_signature_help' },
-        }, {
-            { name = 'path' },
-            { name = 'buffer' },
-        }),
-    })
-end
+        ['<S-Tab>']   = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            else
+                fallback()
+            end
+        end, { 'i', 's' }),
+    }),
+    sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' },
+        { name = 'nvim_lsp_signature_help' },
+    }, {
+        { name = 'path' },
+        { name = 'buffer' },
+    }),
+})
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-local ok_cmp_lsp, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
-if ok_cmp_lsp then
-    capabilities = cmp_lsp.default_capabilities(capabilities)
-end
+cmp_lsp = require('cmp_nvim_lsp')
+capabilities = cmp_lsp.default_capabilities(capabilities)
 
 vim.lsp.config('lua_ls', {
     capabilities = capabilities,
@@ -259,13 +242,7 @@ vim.pack.add({
     { src = 'https://github.com/windwp/nvim-autopairs' },
 })
 
-do
-    local ok, npairs = pcall(require, 'nvim-autopairs')
-    if not ok then return end
-
-    npairs.setup({})
-
-    local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-    local cmp = require('cmp')
-    cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
-end
+require('nvim-autopairs').setup()
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+local cmp = require('cmp')
+cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())

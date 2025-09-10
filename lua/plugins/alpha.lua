@@ -4,8 +4,7 @@ vim.pack.add({
 })
 
 do
-    local ok, alpha = pcall(require, 'alpha')
-    if not ok then return end
+    local alpha = require('alpha')
     local dashboard = require('alpha.themes.dashboard')
 
     -- dashboard.section.header.val = {
