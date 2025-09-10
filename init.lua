@@ -17,7 +17,6 @@ require('plugins.tmux')
 require('plugins.mini')
 require('plugins.gitsigns')
 require('plugins.telescope')
-require('plugins.alpha')
 require('plugins.flash')
 
 -- keymaps
@@ -36,32 +35,41 @@ vim.pack.add({
     { src = 'https://github.com/zenbones-theme/zenbones.nvim' },
     { src = 'https://github.com/thesimonho/kanagawa-paper.nvim' },
     { src = 'https://github.com/vague2k/vague.nvim' },
-    { src = 'https://github.com/metalelf0/black-metal-theme-neovim'},
+    { src = 'https://github.com/metalelf0/black-metal-theme-neovim' },
     -- ui
     { src = 'https://github.com/lukas-reineke/indent-blankline.nvim' },
-    { src = 'https://github.com/nvim-lualine/lualine.nvim' },
-    { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
 })
 
-vim.cmd.colorscheme 'dark-funeral'
-
--- lualine
-require('lualine').setup {
-    options = {
-        theme = 'auto',
-        globalstatus = true,
-        section_separators = '',
-        component_separators = '',
-    },
-    sections = {
-        lualine_c = {
-            {
-                'filename',
-                path = 1,
-            }
-        }
+-- vague setup
+require('vague').setup {
+    colors = {
+        bg = "#000000",
+        inactiveBg = "#000000",
+        fg = "#c1c1c1",
+        floatBorder = "#878787",
+        line = "#252530",
+        comment = "#606079",
+        builtin = "#b4d4cf",
+        func = "#c48282",
+        string = "#fbcb97",
+        number = "#e0a363",
+        property = "#c1c1c1",
+        constant = "#aeaed1",
+        parameter = "#bb9dbd",
+        visual = "#333333",
+        error = "#d8647e",
+        warning = "#f3be7c",
+        hint = "#7e98e8",
+        operator = "#9b99a3",
+        keyword = "#5f8787",
+        type = "#d0dfee",
+        search = "#405065",
+        plus = "#7fa563",
+        delta = "#f3be7c",
     },
 }
+
+vim.cmd.colorscheme 'vague'
 
 -- indent blankline
 require("ibl").setup()

@@ -35,15 +35,7 @@ if ok then
             --initial_text = '',
         })
     end)
-
     vim.keymap.set('n', '<leader>st', builtin.treesitter)
-    
-    -- telescope lsp
-    vim.keymap.set('n', 'gr', builtin.lsp_references)
-    vim.keymap.set('n', 'gd', builtin.lsp_definitions)
-    vim.keymap.set('n', 'gi', builtin.lsp_implementations)
-    vim.keymap.set('n', 'gt', builtin.lsp_type_definitions)
-
     vim.keymap.set('n', '<leader>sf', function()
         builtin.lsp_document_symbols({
             initial_text = '',
