@@ -85,6 +85,9 @@ return {
             vim.opt.foldlevel = 99
             vim.opt.foldlevelstart = 99
             vim.opt.foldenable = true
+
+            -- folding keymaps
+            vim.keymap.set('n', 'cj', 'za', { desc = 'Toggle fold under cursor' })
         end,
     },
     {
